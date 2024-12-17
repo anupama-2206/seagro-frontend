@@ -5,8 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Board - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        .navbar .logo {
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .job-listings {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .job-card {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .job-card button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .job-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .platform-link {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .platform-link:hover {
+            background-color: #218838;
+        }
+
+    </style>
 </head>
 <body>
+
     <header>
         <nav class="navbar">
             <a href="../index.html" class="logo">SeaGro</a>
@@ -33,7 +111,7 @@
                 <p><strong>Company:</strong> ABC Corp</p>
                 <p><strong>Location:</strong> Remote</p>
                 <p><strong>Skills:</strong> JavaScript, React</p>
-                <button>Apply</button>
+                <button onclick="applyJob('Frontend Developer')">Apply</button>
             </div>
 
             <!-- Job Listing 2 -->
@@ -42,7 +120,21 @@
                 <p><strong>Company:</strong> XYZ Inc</p>
                 <p><strong>Location:</strong> San Francisco, CA</p>
                 <p><strong>Skills:</strong> Node.js, MongoDB</p>
-                <button>Apply</button>
+                <button onclick="applyJob('Backend Developer')">Apply</button>
+            </div>
+        </div>
+        
+        <!-- Platforms Section -->
+        <div id="platforms-container" style="display: none;">
+            <h2>Platforms to Apply</h2>
+            <div class="platform-link">
+                <a href="https://www.linkedin.com" target="_blank">Apply on LinkedIn</a>
+            </div>
+            <div class="platform-link">
+                <a href="https://www.indeed.com" target="_blank">Apply on Indeed</a>
+            </div>
+            <div class="platform-link">
+                <a href="https://www.glassdoor.com" target="_blank">Apply on Glassdoor</a>
             </div>
         </div>
     </main>
@@ -50,36 +142,19 @@
     <footer>
         <p>&copy; 2024 SeaGro. All rights reserved.</p>
     </footer>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Board</title>
-</head>
-<body>
-    <h1>Job Listings</h1>
-    <div id="jobs-container"></div>
 
     <script>
-        fetch("http://127.0.0.1:5000/api/jobs")
-            .then(response => response.json())
-            .then(data => {
-                const jobsContainer = document.getElementById("jobs-container");
-                data.forEach(job => {
-                    jobsContainer.innerHTML += `
-                        <div>
-                            <h3>${job.title}</h3>
-                            <p>${job.description}</p>
-                        </div>
-                        <hr>
-                    `;
-                });
-            })
-            .catch(error => console.error("Error fetching jobs:", error));
+        // Function to handle the Apply button click
+        function applyJob(jobTitle) {
+            // Show the platforms to apply
+            const platformsContainer = document.getElementById("platforms-container");
+            platformsContainer.style.display = 'block';
+            alert(`You have selected to apply for the job: ${jobTitle}.`);
+
+            // Scroll to the platforms section
+            platformsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
+
 </body>
 </html>
-

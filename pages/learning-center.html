@@ -3,10 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Center</title>
+    <title>Learning Center - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        .courses-container, .tutorials-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .course-card, .tutorial-card {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .course-card h3, .tutorial-card h3 {
+            margin: 10px 0;
+        }
+        .course-card p, .tutorial-card p {
+            margin: 5px 0;
+        }
+        .course-link, .tutorial-link {
+            padding: 5px;
+            background-color: #cad0d6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .course-link:hover, .tutorial-link:hover {
+            background-color: #d9cbd6;
+        }
+        .tutorials-section {
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <nav class="navbar">
             <a href="../index.html" class="logo">SeaGro</a>
@@ -18,52 +52,120 @@
                 <li><a href="bike-sharing.html">Bike Sharing</a></li>
                 <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
                 <li><a href="chat.html">Chat</a></li>
-                <li><a href="contentsharing.html">Content sharing</a></li>
-                <li><a href="to-dolists.html">To-Do-lists</a></li>
-                
-                
-            
-                
+                <li><a href="contentsharing.html">Content Sharing</a></li>
+                <li><a href="to-dolists.html">To-Do Lists</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <h1>Learning Center</h1>
-        <div id="learning-center" class="content-container"></div>
+
+        <!-- Online Courses Section -->
+        <section class="courses-section">
+            <h2>Online Courses</h2>
+            <div id="courses-container" class="courses-container">
+                <!-- Course 1 -->
+                <div class="course-card">
+                    <h3>HTML Basics</h3>
+                    <p>Learn the basics of HTML, the building block of web development.</p>
+                    <a href="#" class="course-link" onclick="enrollCourse('HTML Basics')">Enroll Now</a>
+                </div>
+                <hr>
+
+                <!-- Course 2 -->
+                <div class="course-card">
+                    <h3>CSS for Beginners</h3>
+                    <p>Understand how to style web pages and create beautiful, responsive designs with CSS.</p>
+                    <a href="#" class="course-link" onclick="enrollCourse('CSS for Beginners')">Enroll Now</a>
+                </div>
+                <hr>
+
+                <!-- Course 3 -->
+                <div class="course-card">
+                    <h3>JavaScript Crash Course</h3>
+                    <p>Get introduced to programming with JavaScript, the language of the web.</p>
+                    <a href="#" class="course-link" onclick="enrollCourse('JavaScript Crash Course')">Enroll Now</a>
+                </div>
+                <hr>
+            </div>
+        </section>
+
+        <!-- Tutorials Section -->
+        <section class="tutorials-section">
+            <h2>Online Tutorials</h2>
+            <div id="tutorials-container" class="tutorials-container">
+                <!-- Tutorial 1 -->
+                <div class="tutorial-card">
+                    <h3>HTML Basics PDF</h3>
+                    <p>A comprehensive PDF guide to get started with HTML basics.</p>
+                    <a href="resources/html_basics.pdf" class="tutorial-link" download>Download PDF</a>
+                    <a href="https://www.youtube.com/watch?v=UB1O30fR-EE" class="tutorial-link" target="_blank">Watch Video Tutorial</a>
+                </div>
+                <hr>
+
+                <!-- Tutorial 2 -->
+                <div class="tutorial-card">
+                    <h3>CSS Fundamentals Video</h3>
+                    <p>Learn the key concepts of CSS with this easy-to-follow video tutorial.</p>
+                    <a href="resources/css_basics.pdf" class="tutorial-link" download>Download PDF</a>
+                    <a href="https://www.youtube.com/watch?v=1Rs2ND1ryYc" class="tutorial-link" target="_blank">Watch Video Tutorial</a>
+                </div>
+                <hr>
+            </div>
+        </section>
+
     </main>
+
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to simulate course enrollment
+        function enrollCourse(courseName) {
+            alert(`You have enrolled in the course: ${courseName}`);
+
+            // Store enrollment status in localStorage (to simulate a user enrolling in the course)
+            localStorage.setItem('enrolledCourse', courseName);
+
+            // Show the tutorial section after enrollment
+            showTutorials(courseName);
+        }
+
+        // Function to show tutorials for the enrolled course
+        function showTutorials(courseName) {
+            const tutorialsContainer = document.getElementById("tutorials-container");
+            if (courseName === 'HTML Basics') {
+                tutorialsContainer.innerHTML = `
+                    <div class="tutorial-card">
+                        <h3>HTML Basics PDF</h3>
+                        <p>A comprehensive PDF guide to get started with HTML basics.</p>
+                        <a href="resources/html_basics.pdf" class="tutorial-link" download>Download PDF</a>
+                        <a href="https://www.youtube.com/watch?v=UB1O30fR-EE" class="tutorial-link" target="_blank">Watch Video Tutorial</a>
+                    </div>
+                `;
+            } else if (courseName === 'CSS for Beginners') {
+                tutorialsContainer.innerHTML = `
+                    <div class="tutorial-card">
+                        <h3>CSS Fundamentals Video</h3>
+                        <p>Learn the key concepts of CSS with this easy-to-follow video tutorial.</p>
+                        <a href="resources/css_basics.pdf" class="tutorial-link" download>Download PDF</a>
+                        <a href="https://www.youtube.com/watch?v=1Rs2ND1ryYc" class="tutorial-link" target="_blank">Watch Video Tutorial</a>
+                    </div>
+                `;
+            }
+        }
+
+        // Show the tutorials if user is already enrolled
+        window.onload = function() {
+            const enrolledCourse = localStorage.getItem('enrolledCourse');
+            if (enrolledCourse) {
+                showTutorials(enrolledCourse);
+            }
+        };
+    </script>
 
     <script src="../scripts/app.js"></script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Center</title>
-</head>
-<body>
-    <h1>Courses</h1>
-    <div id="courses-container"></div>
-
-    <script>
-        fetch("http://127.0.0.1:5000/api/courses")
-            .then(response => response.json())
-            .then(data => {
-                const coursesContainer = document.getElementById("courses-container");
-                data.forEach(course => {
-                    coursesContainer.innerHTML += `
-                        <div>
-                            <h3>${course.title}</h3>
-                            <p>${course.description}</p>
-                        </div>
-                        <hr>
-                    `;
-                });
-            })
-            .catch(error => console.error("Error fetching courses:", error));
-    </script>
-</body>
-</html>
-

@@ -111,3 +111,47 @@ h1 {
 .job-card button:hover {
     background-color: #005bb5;
 }
+/* Add styles for the Learning Center page */
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+section {
+    margin: 40px 0;
+}
+
+.course-card, .tutorial-card {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.course-card h3, .tutorial-card h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.course-card p, .tutorial-card p {
+    margin: 10px 0;
+}
+
+a.course-link, a.tutorial-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a.course-link:hover, a.tutorial-link:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 1px solid #ddd;
+}
+

@@ -5,6 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .chat-box {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background-color: #c1e7ff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .received {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #message-input {
+            width: 85%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        #send-button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+
+        #image-input {
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+        .message img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,10 +124,10 @@
                 <li><a href="jboard.html">Job Board</a></li>
                 <li><a href="learning-center.html">Learning Center</a></li>
                 <li><a href="community.html">Community</a></li>
-                <li><a href="bike-sharing.html">bike sharing</a></li>
+                <li><a href="bike-sharing.html">Bike Sharing</a></li>
                 <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
-                <li><a href="contentsharing.html">content sharing</a></li>
-                <li><a href="to-dolists.html">To-Do-lists</a></li>
+                <li><a href="contentsharing.html">Content Sharing</a></li>
+                <li><a href="to-dolists.html">To-Do Lists</a></li>
             </ul>
         </nav>
     </header>
@@ -27,6 +135,85 @@
     <main>
         <h1>Real-Time Chat</h1>
         <p>Chat with friends and community members.</p>
+
+        <!-- Chat Container -->
         <div class="chat-box">
-            <div class="messages">
-                <!-- Messages will appear
+            <div id="messages" class="messages"></div>
+
+            <!-- Input for new messages -->
+            <div>
+                <input type="text" id="message-input" placeholder="Type a message" />
+                <button id="send-button">Send</button>
+            </div>
+
+            <!-- Image upload -->
+            <input type="file" id="image-input" accept="image/*" />
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+
+    <!-- Include Socket.IO Client Library -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    
+    <script>
+        // Connect to the Socket.IO server
+        const socket = io("http://127.0.0.1:5000", {
+            transports: ['websocket', 'polling'] // Force WebSocket and polling transport
+        });
+
+
+        // DOM elements
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messagesContainer = document.getElementById('messages');
+        const imageInput = document.getElementById('image-input');
+
+        // Function to add message to the chat
+        function addMessage(message, type, image = null) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', type);
+
+            const textElement = document.createElement('p');
+            textElement.textContent = message;
+            messageElement.appendChild(textElement);
+
+            // Add image if available
+            if (image) {
+                const imageElement = document.createElement('img');
+                imageElement.src = image;
+                messageElement.appendChild(imageElement);
+            }
+
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight; // Auto-scroll to latest message
+        }
+
+        // Emit event when sending a message
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            const imageFile = imageInput.files[0];
+            
+            if (message || imageFile) {
+                // Send message to server
+                const messageData = { message: message, image: imageFile ? URL.createObjectURL(imageFile) : null };
+                socket.emit('send_message', messageData);
+
+                // Add message locally
+                addMessage(message, 'sent', messageData.image);
+
+                // Clear input fields
+                messageInput.value = '';
+                imageInput.value = '';
+            }
+        });
+
+        // Listen for 'receive_message' event and display incoming messages
+        socket.on('receive_message', (data) => {
+            addMessage(data.message, 'received', data.image);
+        });
+    </script>
+</body>
+</html>

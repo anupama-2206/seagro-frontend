@@ -5,8 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Tech News - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        .news-card {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .news-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .news-card p {
+            margin-bottom: 10px;
+        }
+
+        .full-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .read-more {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <nav class="navbar">
             <a href="../index.html" class="logo">SeaGro</a>
@@ -20,7 +53,6 @@
                 <li><a href="chat.html">Chat</a></li>
                 <li><a href="contentsharing.html">Content sharing</a></li>
                 <li><a href="to-dolists.html">To-Do-lists</a></li>
-
             </ul>
         </nav>
     </header>
@@ -29,26 +61,60 @@
         <h1>Daily Tech News</h1>
         <section class="tech-news">
             <h2>Latest Articles</h2>
+
+            <!-- News Article 1 -->
             <div class="news-card">
                 <h3>AI Breakthroughs in 2024</h3>
                 <p>AI technology is advancing rapidly, here's what's coming next.</p>
-                <a href="#">Read More</a>
+                <a href="#" class="read-more" onclick="toggleContent(1)">Read More</a>
+                <div class="full-content" id="content-1">
+                    <p>Artificial Intelligence is set to make huge strides in 2024. With advancements in natural language processing and machine learning algorithms, AI is expected to revolutionize industries such as healthcare, finance, and autonomous vehicles. Experts predict that 2024 will be a landmark year for AI research and development, with more real-world applications making their way into everyday life.</p>
+                </div>
             </div>
+
+            <!-- News Article 2 -->
             <div class="news-card">
                 <h3>The Future of Web Development</h3>
                 <p>New frameworks and tools to watch for in 2024.</p>
-                <a href="#">Read More</a>
+                <a href="#" class="read-more" onclick="toggleContent(2)">Read More</a>
+                <div class="full-content" id="content-2">
+                    <p>The landscape of web development continues to evolve rapidly. In 2024, we are likely to see the rise of new JavaScript frameworks and tools that focus on improving both performance and user experience. Frameworks like Next.js and Svelte are expected to grow in popularity, while more traditional options like React and Vue.js will continue to evolve. Additionally, web developers will increasingly focus on mobile-first design and progressive web apps (PWAs) to provide faster and more engaging experiences for users across different devices.</p>
+                </div>
             </div>
+
+            <!-- News Article 3 -->
             <div class="news-card">
                 <h3>Tech Giants and Sustainability</h3>
                 <p>How the biggest tech companies are going green.</p>
-                <a href="#">Read More</a>
+                <a href="#" class="read-more" onclick="toggleContent(3)">Read More</a>
+                <div class="full-content" id="content-3">
+                    <p>As climate change continues to be a pressing global issue, many of the biggest tech companies are making moves towards sustainability. In 2024, companies like Google, Microsoft, and Apple are leading the way with their commitments to achieving carbon neutrality. These tech giants are investing heavily in renewable energy, promoting sustainable product designs, and developing innovative solutions to reduce their carbon footprints. This trend is expected to grow, with more companies taking responsibility for their environmental impact in the coming years.</p>
+                </div>
             </div>
+
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 SeaGro. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Function to toggle full content visibility
+        function toggleContent(contentId) {
+            const content = document.getElementById("content-" + contentId);
+            const readMoreLink = content.previousElementSibling; // The Read More link
+
+            // Toggle the visibility of the full content
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                readMoreLink.textContent = "Read Less"; // Change text to "Read Less"
+            } else {
+                content.style.display = "none";
+                readMoreLink.textContent = "Read More"; // Change text back to "Read More"
+            }
+        }
+    </script>
+
 </body>
 </html>

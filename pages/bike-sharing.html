@@ -5,6 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bike Sharing - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        /* Style adjustments for the new booking form */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .bike-booking {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+
+        .bike-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .bike-card h3 {
+            font-size: 1.5em;
+        }
+
+        .bike-card p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .bike-card button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .bike-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .booking-form {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .booking-form input,
+        .booking-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .booking-form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .booking-form button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -28,26 +141,67 @@
         <h1>Bike Sharing</h1>
         <section class="bike-booking">
             <h2>Available Bikes</h2>
+
+            <!-- Mountain Bike -->
             <div class="bike-card">
                 <h3>Mountain Bike</h3>
                 <p>Durable and perfect for off-road trails.</p>
-                <button>Book Now</button>
+                <button onclick="showBookingForm('Mountain Bike')">Book Now</button>
             </div>
+
+            <!-- Road Bike -->
             <div class="bike-card">
                 <h3>Road Bike</h3>
                 <p>Fast and light, ideal for city commuting.</p>
-                <button>Book Now</button>
+                <button onclick="showBookingForm('Road Bike')">Book Now</button>
             </div>
+
+            <!-- Hybrid Bike -->
             <div class="bike-card">
                 <h3>Hybrid Bike</h3>
                 <p>Perfect for both city roads and light trails.</p>
-                <button>Book Now</button>
+                <button onclick="showBookingForm('Hybrid Bike')">Book Now</button>
             </div>
         </section>
+
+        <!-- Booking Form -->
+        <div id="booking-form" class="booking-form">
+            <h3>Book Your Bike</h3>
+            <p>Bike Type: <span id="bike-type"></span></p>
+            <input type="email" id="email" placeholder="Enter your email" required />
+            <input type="tel" id="phone" placeholder="Enter your phone number" required />
+            <button onclick="submitBooking()">Submit Booking</button>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2024 SeaGro. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Function to show the booking form when the "Book Now" button is clicked
+        function showBookingForm(bikeType) {
+            // Display the booking form
+            document.getElementById('booking-form').style.display = 'block';
+            // Set the bike type in the booking form
+            document.getElementById('bike-type').textContent = bikeType;
+        }
+
+        // Function to handle booking submission
+        function submitBooking() {
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Basic validation
+            if (email && phone) {
+                // You can add more logic here to save the booking or send it to the server
+                alert('Booking successfully submitted!');
+                // Hide the booking form after submission
+                document.getElementById('booking-form').style.display = 'none';
+            } else {
+                alert('Please fill in both email and phone number.');
+            }
+        }
+    </script>
 </body>
 </html>

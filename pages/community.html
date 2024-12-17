@@ -3,8 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community</title>
+    <title>Community - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        #community-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+            overflow-y: auto;
+            max-height: 80vh; /* Makes posts scrollable */
+        }
+
+        .post {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .post-time {
+            font-size: 0.9em;
+            color: gray;
+        }
+
+        .post-content {
+            margin-top: 10px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .post-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .like-button, .comment-button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .like-button:hover, .comment-button:hover {
+            background-color: #0056b3;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .comment {
+            margin-top: 10px;
+        }
+
+        .comment-user {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin-left: 10px;
+            font-style: italic;
+        }
+
+        #create-post-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #post-content {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            resize: none;
+        }
+
+        #post-image {
+            margin-bottom: 15px;
+        }
+
+        #post-button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #post-button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,18 +170,103 @@
                 <li><a href="./learning-center.html">Learning Center</a></li>
                 <li><a href="./bike-sharing.html">Bike sharing</a></li>
                 <li><a href="./daily-tech-news.html">Daily-tech-news</a></li>
-                <li><a href="./chat.html">chat</a></li>
-                <li><a href="./contentsharing.html">content sharing</a></li>
-                <li><a href="./to-dolists.html">To-Do-lists</a></li>
-
+                <li><a href="./chat.html">Chat</a></li>
+                <li><a href="./contentsharing.html">Content Sharing</a></li>
+                <li><a href="./to-dolists.html">To-Do Lists</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
         <h1>Community</h1>
-        <div id="community-posts" class="content-container"></div>
+        <section id="community-posts">
+            <!-- Sample Post with image -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/50" alt="User Avatar" class="user-avatar">
+                    <span class="user-name">JohnDoe</span>
+                    <span class="post-time">Posted 2 hours ago</span>
+                </div>
+                <div class="post-content">
+                    <p>This is a sample post! Looking forward to learning more about web development.</p>
+                    <img src="https://via.placeholder.com/500" alt="Post Image" class="post-image">
+                </div>
+                <div class="post-actions">
+                    <button class="like-button">Like</button>
+                    <button class="comment-button">Comment</button>
+                </div>
+                <div class="comments-section">
+                    <div class="comment">
+                        <span class="comment-user">JaneDoe:</span>
+                        <span class="comment-text">This is awesome! Keep it up!</span>
+                    </div>
+                    <input type="text" class="comment-input" placeholder="Add a comment...">
+                </div>
+            </div>
+
+            <!-- Additional posts would be dynamically loaded here -->
+        </section>
+
+        <section id="create-post-section">
+            <h2>Create a Post</h2>
+            <textarea id="post-content" placeholder="Write something..."></textarea>
+            <input type="file" id="post-image" accept="image/*">
+            <button id="post-button">Post</button>
+        </section>
     </main>
 
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+
     <script src="../scripts/app.js"></script>
+    <script>
+        // Example of how to handle creating a new post (In a real scenario, you'd use fetch to interact with your backend)
+        document.getElementById("post-button").addEventListener("click", function() {
+            const postContent = document.getElementById("post-content").value;
+            const postImage = document.getElementById("post-image").files[0];
+            
+            if (postContent.trim() || postImage) {
+                // Here you'd send the post data (postContent and postImage) to your backend via fetch (or socket.io for real-time)
+                const newPost = {
+                    userName: "JohnDoe",
+                    time: "Just Now",
+                    content: postContent,
+                    image: URL.createObjectURL(postImage),
+                    likes: 0,
+                    comments: []
+                };
+
+                const newPostHTML = `
+                    <div class="post">
+                        <div class="post-header">
+                            <img src="https://via.placeholder.com/50" alt="User Avatar" class="user-avatar">
+                            <span class="user-name">${newPost.userName}</span>
+                            <span class="post-time">Posted ${newPost.time}</span>
+                        </div>
+                        <div class="post-content">
+                            <p>${newPost.content}</p>
+                            <img src="${newPost.image}" alt="Post Image" class="post-image">
+                        </div>
+                        <div class="post-actions">
+                            <button class="like-button">Like</button>
+                            <button class="comment-button">Comment</button>
+                        </div>
+                        <div class="comments-section">
+                            ${newPost.comments.map(comment => `
+                                <div class="comment">
+                                    <span class="comment-user">${comment.user}:</span>
+                                    <span class="comment-text">${comment.text}</span>
+                                </div>
+                            `).join('')}
+                            <input type="text" class="comment-input" placeholder="Add a comment...">
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById("community-posts").innerHTML = newPostHTML + document.getElementById("community-posts").innerHTML;
+            }
+        });
+    </script>
 </body>
 </html>

@@ -5,33 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Sharing - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        .content-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-item img,
+        .content-item video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .upload-form {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #eef2f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-form input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .upload-form button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <nav class="navbar">
             <a href="../index.html" class="logo">SeaGro</a>
             <ul class="nav-links">
                 <li><a href="../index.html">Home Page</a></li>
-                <li><a href="User profile.html">User profile</a></li>
+                <li><a href="User profile.html">User Profile</a></li>
                 <li><a href="jboard.html">JBoard</a></li>
                 <li><a href="learning-center.html">Learning Center</a></li>
                 <li><a href="community.html">Community</a></li>
-                <li><a href="bike-sharing.html">Bike sharing</a></li>
-                <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
-                <li><a href="chat.html">chat</a></li>
-                <li><a href="to-dolists.html">To-Do-lists</a></li>
+                <li><a href="bike-sharing.html">Bike Sharing</a></li>
+                <li><a href="daily-tech-news.html">Daily Tech News</a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="to-dolists.html">To-Do Lists</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <h1>Content Sharing</h1>
+        
+        <!-- Content Upload Section -->
+        <section class="upload-form">
+            <h2>Share Your Content</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <label for="content-upload">Upload Image or Video:</label>
+                <input type="file" id="content-upload" name="content" accept="image/*,video/*" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+
+        <!-- Display Shared Content -->
         <section class="content-sharing">
             <h2>Shared Content</h2>
+
+            <!-- Content Item 1: Image -->
             <div class="content-item">
-                <img src="https://via.placeholder.com/150" alt="Sample Image">
+                <img src="https://via.placeholder.com/600x400" alt="Sample Image">
                 <p>Amazing landscape photo shared by User123!</p>
             </div>
+
+            <!-- Content Item 2: Video -->
             <div class="content-item">
                 <video controls>
                     <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
@@ -39,11 +97,72 @@
                 </video>
                 <p>Check out this cool video by User456!</p>
             </div>
+
+            <!-- Content Item 3: Image -->
+            <div class="content-item">
+                <img src="https://via.placeholder.com/600x400" alt="Sample Image 2">
+                <p>Beautiful beach view shared by User789!</p>
+            </div>
+
+            <!-- Content Item 4: Video -->
+            <div class="content-item">
+                <video controls>
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>Watch this amazing tech demo by User101!</p>
+            </div>
+
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 SeaGro. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Handle content upload form
+        document.getElementById("upload-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById("content-upload");
+            const file = fileInput.files[0];
+            if (file) {
+                // Display the uploaded content (for simplicity, we use placeholders here)
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const contentContainer = document.querySelector(".content-sharing");
+                    let newContent = "";
+
+                    if (file.type.startsWith("image/")) {
+                        newContent = `
+                            <div class="content-item">
+                                <img src="${e.target.result}" alt="Uploaded Image">
+                                <p>New image shared by You!</p>
+                            </div>
+                        `;
+                    } else if (file.type.startsWith("video/")) {
+                        newContent = `
+                            <div class="content-item">
+                                <video controls>
+                                    <source src="${e.target.result}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p>New video shared by You!</p>
+                            </div>
+                        `;
+                    }
+
+                    contentContainer.insertAdjacentHTML('afterbegin', newContent);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            // Reset form after upload
+            fileInput.value = "";
+        });
+    </script>
 </body>
 </html>

@@ -5,73 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        /* User Profile Card */
+        .profile-card {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        img { width: 100px; border-radius: 50%; margin-bottom: 10px; }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button { background-color: #007bff; color: white; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <a href="../index.html" class="logo">SeaGro</a>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home Page</a></li>
-                <li><a href="jboard.html">Job Board</a></li>
-                <li><a href="learning-center.html">Learning Center</a></li>
-                <li><a href="community.html">Community</a></li>
-                <li><a href="bike-sharing.html">Bike sharing</a></li>
-                <li><a href="daily-tech-news.html">Daily-Tech-news </a></li>
-                <li><a href="chat.html">Chat</a></li>
-                <li><a href="contentsharing.html">Content sharing</a></li>
-                <li><a href="to-dolists.html">To-Do-lists</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <h1>User Profile</h1>
-        <div class="profile-container">
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Alice" class="profile-image">
-                <h2>Alice Johnson</h2>
-                <p><strong>Bio:</strong> Full-stack developer with a passion for building scalable web applications.</p>
-                <p><strong>Skills:</strong> JavaScript, React, Node.js, MongoDB</p>
-                <p><strong>Location:</strong> New York, USA</p>
-            </div>
+<header>
+    <nav>
+        <a href="../index.html">SeaGro</a>
+        <button id="logout-btn" style="float: right;">Logout</button>
+    </nav>
+</header>
+
+<main>
+    <div id="profile-container" class="profile-card">
+        <h2>Welcome, <span id="username"></span></h2>
+        <img src="https://via.placeholder.com/100" alt="Profile Picture">
+        <div id="user-details">
+            <p><strong>Stream:</strong> <span id="stream"></span></p>
+            <p><strong>Location:</strong> <span id="location"></span></p>
+            <p><strong>Age:</strong> <span id="age"></span></p>
+            <p><strong>Qualification:</strong> <span id="qualification"></span></p>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer>
-        <p>&copy; 2024 SeaGro. All rights reserved.</p>
-    </footer>
+<script>
+    // Fetch user data from the backend
+    async function fetchUserProfile() {
+        const response = await fetch('/user/profile', { method: 'GET', credentials: 'include' });
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById("username").textContent = data.email;
+            document.getElementById("stream").textContent = data.stream || 'N/A';
+            document.getElementById("location").textContent = data.location || 'N/A';
+            document.getElementById("age").textContent = data.age || 'N/A';
+            document.getElementById("qualification").textContent = data.qualification || 'N/A';
+        } else {
+            alert("Please log in first!");
+            window.location.href = '/login.html';
+        }
+    }
+    fetchUserProfile();
+
+    // Logout Button Handler
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+        const response = await fetch('/logout', { method: 'POST', credentials: 'include' });
+        if (response.ok) {
+            alert('Logged out successfully!');
+            window.location.href = '/login.html';
+        } else {
+            alert('Logout failed!');
+        }
+    });
+</script>
+
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profiles</title>
-</head>
-<body>
-    <h1>User Profiles</h1>
-    <div id="user-container"></div>
-
-    <script>
-        // Fetch users from backend API
-        fetch("http://127.0.0.1:5000/api/users")
-            .then(response => response.json())
-            .then(data => {
-                const userContainer = document.getElementById("user-container");
-                data.forEach(user => {
-                    userContainer.innerHTML += `
-                        <div>
-                            <h3>${user.username}</h3>
-                            <p>Email: ${user.email}</p>
-                            <p>Bio: ${user.bio}</p>
-                        </div>
-                        <hr>
-                    `;
-                });
-            })
-            .catch(error => console.error("Error fetching users:", error));
-    </script>
-</body>
-</html>
-
