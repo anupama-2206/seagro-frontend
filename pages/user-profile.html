@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - SeaGro</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="../index.html" class="logo">SeaGro</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home Page</a></li>
+                <li><a href="jboard.html">Job Board</a></li>
+                <li><a href="learning-center.html">Learning Center</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="bike-sharing.html">Bike sharing</a></li>
+                <li><a href="daily-tech-news.html">Daily-Tech-news </a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="contentsharing.html">Content sharing</a></li>
+                <li><a href="to-dolists.html">To-Do-lists</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>User Profile</h1>
+        <div class="profile-container">
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="Alice" class="profile-image">
+                <h2>Alice Johnson</h2>
+                <p><strong>Bio:</strong> Full-stack developer with a passion for building scalable web applications.</p>
+                <p><strong>Skills:</strong> JavaScript, React, Node.js, MongoDB</p>
+                <p><strong>Location:</strong> New York, USA</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profiles</title>
+</head>
+<body>
+    <h1>User Profiles</h1>
+    <div id="user-container"></div>
+
+    <script>
+        // Fetch users from backend API
+        fetch("http://127.0.0.1:5000/api/users")
+            .then(response => response.json())
+            .then(data => {
+                const userContainer = document.getElementById("user-container");
+                data.forEach(user => {
+                    userContainer.innerHTML += `
+                        <div>
+                            <h3>${user.username}</h3>
+                            <p>Email: ${user.email}</p>
+                            <p>Bio: ${user.bio}</p>
+                        </div>
+                        <hr>
+                    `;
+                });
+            })
+            .catch(error => console.error("Error fetching users:", error));
+    </script>
+</body>
+</html>
+

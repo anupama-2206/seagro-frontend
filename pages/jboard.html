@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board - SeaGro</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="../index.html" class="logo">SeaGro</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home Page</a></li>
+                <li><a href="user-profile.html">User Profile</a></li>
+                <li><a href="learning-center.html">Learning Center</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="bike-sharing.html">Bike sharing</a></li>
+                <li><a href="daily-tech-news.html">Daily-Tech-news</a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="contentsharing.html">Content sharing</a></li>
+                <li><a href="to-dolists.html">To-Do-lists</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Job Board</h1>
+        <div class="job-listings">
+            <!-- Job Listing 1 -->
+            <div class="job-card">
+                <h2>Frontend Developer</h2>
+                <p><strong>Company:</strong> ABC Corp</p>
+                <p><strong>Location:</strong> Remote</p>
+                <p><strong>Skills:</strong> JavaScript, React</p>
+                <button>Apply</button>
+            </div>
+
+            <!-- Job Listing 2 -->
+            <div class="job-card">
+                <h2>Backend Developer</h2>
+                <p><strong>Company:</strong> XYZ Inc</p>
+                <p><strong>Location:</strong> San Francisco, CA</p>
+                <p><strong>Skills:</strong> Node.js, MongoDB</p>
+                <button>Apply</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+</head>
+<body>
+    <h1>Job Listings</h1>
+    <div id="jobs-container"></div>
+
+    <script>
+        fetch("http://127.0.0.1:5000/api/jobs")
+            .then(response => response.json())
+            .then(data => {
+                const jobsContainer = document.getElementById("jobs-container");
+                data.forEach(job => {
+                    jobsContainer.innerHTML += `
+                        <div>
+                            <h3>${job.title}</h3>
+                            <p>${job.description}</p>
+                        </div>
+                        <hr>
+                    `;
+                });
+            })
+            .catch(error => console.error("Error fetching jobs:", error));
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do Lists - SeaGro</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="../index.html" class="logo">SeaGro</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home Page</a></li>
+                <li><a href="user-profile.html">User Profile</a></li>
+                <li><a href="jboard.html">JBoard</a></li>
+                <li><a href="learning-center.html">Learning Center</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="bike-sharing.html">bike sharing</a></li>
+                <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
+                <li><a href="chat.html">chat</a></li>
+                <li><a href="contentsharing.html">content sharing</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>To-do Lists</h1>
+        <section class="todo-list">
+            <h2>Your Tasks</h2>
+            <ul>
+                <li>
+                    <input type="checkbox" id="task1">
+                    <label for="task1">Finish project report</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task2">
+                    <label for="task2">Call the bike repair shop</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task3">
+                    <label for="task3">Enroll in a new online course</label>
+                </li>
+            </ul>
+            <button>Add New Task</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SeaGro. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <div id="todo-container"></div>
+
+    <script>
+        fetch("http://127.0.0.1:5000/api/todos")
+            .then(response => response.json())
+            .then(data => {
+                const todoContainer = document.getElementById("todo-container");
+                data.forEach(todo => {
+                    todoContainer.innerHTML += `
+                        <div>
+                            <p>Task: ${todo.task}</p>
+                            <p>User ID: ${todo.user_id}</p>
+                        </div>
+                        <hr>
+                    `;
+                });
+            })
+            .catch(error => console.error("Error fetching todos:", error));
+    </script>
+</body>
+</html>
+
