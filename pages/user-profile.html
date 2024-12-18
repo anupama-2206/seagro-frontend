@@ -17,66 +17,56 @@
             padding: 20px;
         }
         img { width: 100px; border-radius: 50%; margin-bottom: 10px; }
-        input, button {
+        button {
             width: 100%;
             margin: 10px 0;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
         }
-        button { background-color: #007bff; color: white; cursor: pointer; }
         button:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
-
-<header>
-    <nav>
-        <a href="../index.html">SeaGro</a>
-        <button id="logout-btn" style="float: right;">Logout</button>
-    </nav>
-</header>
+    <header>
+        <nav class="navbar">
+            <a href="../index.html" class="logo">SeaGro</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home Page</a></li>
+                <li><a href="user-profile.html">User Profile</a></li>
+                <li><a href="jboard.html">Job Board</a></li>
+                <li><a href="learning-center.html">Learning Center</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="bike-sharing.html">Bike Sharing</a></li>
+                <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
+                <li><a href="contentsharing.html">Content Sharing</a></li>
+                <li><a href="to-dolists.html">To-Do Lists</a></li>
+            </ul>
+        </nav>
+    </header>
 
 <main>
     <div id="profile-container" class="profile-card">
-        <h2>Welcome, <span id="username"></span></h2>
+        <h2>Welcome, <span id="username">JohnDoe</span></h2>
         <img src="https://via.placeholder.com/100" alt="Profile Picture">
         <div id="user-details">
-            <p><strong>Stream:</strong> <span id="stream"></span></p>
-            <p><strong>Location:</strong> <span id="location"></span></p>
-            <p><strong>Age:</strong> <span id="age"></span></p>
-            <p><strong>Qualification:</strong> <span id="qualification"></span></p>
+            <p><strong>Email:</strong> <span id="email">johndoe@example.com</span></p>
+            <p><strong>Phone:</strong> <span id="phone">123-456-7890</span></p>
+            <p><strong>Location:</strong> <span id="location">New York</span></p>
+            <p><strong>Age:</strong> <span id="age">25</span></p>
+            <p><strong>Stream:</strong> <span id="stream">Engineering</span></p>
         </div>
     </div>
 </main>
 
 <script>
-    // Fetch user data from the backend
-    async function fetchUserProfile() {
-        const response = await fetch('/user/profile', { method: 'GET', credentials: 'include' });
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById("username").textContent = data.email;
-            document.getElementById("stream").textContent = data.stream || 'N/A';
-            document.getElementById("location").textContent = data.location || 'N/A';
-            document.getElementById("age").textContent = data.age || 'N/A';
-            document.getElementById("qualification").textContent = data.qualification || 'N/A';
-        } else {
-            alert("Please log in first!");
-            window.location.href = '/login.html';
-        }
-    }
-    fetchUserProfile();
-
     // Logout Button Handler
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-        const response = await fetch('/logout', { method: 'POST', credentials: 'include' });
-        if (response.ok) {
-            alert('Logged out successfully!');
-            window.location.href = '/login.html';
-        } else {
-            alert('Logout failed!');
-        }
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        alert('Logged out successfully!');
+        window.location.href = '/login.html';
     });
 </script>
 

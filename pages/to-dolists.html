@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-do Lists - SeaGro</title>
+    <title>To-Do Lists - SeaGro</title>
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
@@ -16,10 +16,10 @@
                 <li><a href="jboard.html">JBoard</a></li>
                 <li><a href="learning-center.html">Learning Center</a></li>
                 <li><a href="community.html">Community</a></li>
-                <li><a href="bike-sharing.html">bike sharing</a></li>
+                <li><a href="bike-sharing.html">Bike sharing</a></li>
                 <li><a href="daily-tech-news.html">Daily-tech-news</a></li>
-                <li><a href="chat.html">chat</a></li>
-                <li><a href="contentsharing.html">content sharing</a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="contentsharing.html">Content sharing</a></li>
             </ul>
         </nav>
     </header>
@@ -28,57 +28,75 @@
         <h1>To-do Lists</h1>
         <section class="todo-list">
             <h2>Your Tasks</h2>
-            <ul>
-                <li>
-                    <input type="checkbox" id="task1">
-                    <label for="task1">Finish project report</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="task2">
-                    <label for="task2">Call the bike repair shop</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="task3">
-                    <label for="task3">Enroll in a new online course</label>
-                </li>
+            <ul id="todo-container">
+                <!-- Tasks will be displayed here dynamically -->
             </ul>
-            <button>Add New Task</button>
+            <input type="text" id="task-input" placeholder="Enter a new task" />
+            <button onclick="addTask()">Add New Task</button>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 SeaGro. All rights reserved.</p>
     </footer>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
-</head>
-<body>
-    <h1>To-Do List</h1>
-    <div id="todo-container"></div>
 
     <script>
-        fetch("http://127.0.0.1:5000/api/todos")
-            .then(response => response.json())
-            .then(data => {
-                const todoContainer = document.getElementById("todo-container");
-                data.forEach(todo => {
-                    todoContainer.innerHTML += `
-                        <div>
-                            <p>Task: ${todo.task}</p>
-                            <p>User ID: ${todo.user_id}</p>
-                        </div>
-                        <hr>
-                    `;
-                });
+        // Fetch tasks from the backend
+        function fetchTasks() {
+            fetch("http://127.0.0.1:5000/api/todos")
+                .then(response => response.json())
+                .then(data => {
+                    const todoContainer = document.getElementById("todo-container");
+                    todoContainer.innerHTML = ''; // Clear existing tasks
+                    data.forEach(todo => {
+                        const taskItem = document.createElement('li');
+                        taskItem.innerHTML = `
+                            <input type="checkbox" id="task-${todo.id}" ${todo.completed ? 'checked' : ''}>
+                            <label for="task-${todo.id}">${todo.task}</label>
+                        `;
+                        todoContainer.appendChild(taskItem);
+                    });
+                })
+                .catch(error => console.error("Error fetching todos:", error));
+        }
+
+        // Add a new task
+        function addTask() {
+            const taskInput = document.getElementById('task-input');
+            const taskValue = taskInput.value.trim();
+            if (!taskValue) return; // Do not add empty tasks
+
+            const taskData = {
+                task: taskValue,
+                completed: false
+            };
+
+            fetch("http://127.0.0.1:5000/api/todos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(taskData)
             })
-            .catch(error => console.error("Error fetching todos:", error));
+            .then(response => response.json())
+            .then(newTask => {
+                // Add new task to the list without reloading the page
+                const todoContainer = document.getElementById("todo-container");
+                const taskItem = document.createElement('li');
+                taskItem.innerHTML = `
+                    <input type="checkbox" id="task-${newTask.id}">
+                    <label for="task-${newTask.id}">${newTask.task}</label>
+                `;
+                todoContainer.appendChild(taskItem);
+
+                // Clear input field
+                taskInput.value = '';
+            })
+            .catch(error => console.error("Error adding task:", error));
+        }
+
+        // Initial fetch to load tasks
+        fetchTasks();
     </script>
 </body>
 </html>
-
